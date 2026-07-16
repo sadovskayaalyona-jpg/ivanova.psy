@@ -1,0 +1,52 @@
+.title {
+  font-size: 2rem;
+}
+
+.intro {
+  margin-top: 0.75rem;
+  color: var(--color-text-muted);
+  max-width: 42rem;
+}
+
+.grid {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+}
+
+.cardFormat {
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.cardText {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.cardPrice {
+  margin-top: 1.25rem;
+  font-weight: 600;
+}
+
+.ctaRow {
+  margin-top: 3rem;
+}
