@@ -19,7 +19,15 @@ export async function login(prevState, formData) {
   });
 
   if (error) {
-    return { error: "Неверный email или пароль." };
+    const isUnconfirmed =
+      error.code === "email_not_confirmed" ||
+      /email not confirmed/i.test(error.message);
+
+    return {
+      error: isUnconfirmed
+        ? "Email ещё не подтверждён. Проверьте почту (и папку «Спам») и перейдите по ссылке из письма от Supabase, затем войдите снова."
+        : "Неверный email или пароль.",
+    };
   }
 
   redirect("/dashboard");
