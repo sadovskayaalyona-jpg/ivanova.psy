@@ -13,11 +13,19 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: results } = await supabase
-    .from("test_results")
-    .select("id, test_slug, score, created_at")
-    .order("created_at", { ascending: false })
-    .limit(10);
+  let results = null;
+  let loadFailed = false;
+  try {
+    const { data, error } = await supabase
+      .from("test_results")
+      .select("id, test_slug, score, created_at")
+      .order("created_at", { ascending: false })
+      .limit(10);
+    if (error) throw error;
+    results = data;
+  } catch {
+    loadFailed = true;
+  }
 
   const fullName = user?.user_metadata?.full_name;
 
@@ -33,7 +41,11 @@ export default async function DashboardPage() {
       </Link>
 
       <h2 className={styles.subtitle}>История тестов</h2>
-      {results && results.length > 0 ? (
+      {loadFailed ? (
+        <p className={styles.empty}>
+          Не получилось загрузить историю — попробуйте обновить страницу.
+        </p>
+      ) : results && results.length > 0 ? (
         <ul className={styles.historyList}>
           {results.map((r) => {
             const test = getTest(r.test_slug);
