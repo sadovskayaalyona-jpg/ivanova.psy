@@ -15,6 +15,7 @@ export default function Header() {
           <Link href="/services">Услуги</Link>
           <Link href="/about">Обо мне</Link>
           <Link href="/contact">Контакты</Link>
+          <Link href="/login">Кабинет</Link>
         </nav>
       </div>
     </header>

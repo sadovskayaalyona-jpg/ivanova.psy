@@ -1,0 +1,85 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  font-weight: 600;
+}
+
+.nav a {
+  color: var(--color-text-muted);
+}
+
+.nav a:hover {
+  color: var(--color-accent);
+}
+
+.intro {
+  color: var(--color-text-muted);
+  margin: 0.6rem 0 1.5rem;
+  max-width: 60ch;
+}
+
+.subtitle {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.historyList li {
+  padding: 0.9rem 1.1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.empty {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.5rem;
+}
+
+.card {
+  display: block;
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  transition: border-color 0.15s ease;
+}
+
+.card:hover {
+  border-color: var(--color-accent);
+}
+
+.cardTitle {
+  display: block;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 0.4rem;
+}
+
+.cardDescription {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}

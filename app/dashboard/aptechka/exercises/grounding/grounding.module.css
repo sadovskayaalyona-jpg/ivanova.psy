@@ -1,0 +1,27 @@
+.step {
+  max-width: 480px;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.stepNumber {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.stepText {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.done {
+  max-width: 480px;
+  padding: 3rem 0;
+}
+
+.done p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
