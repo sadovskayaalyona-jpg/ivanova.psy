@@ -17,11 +17,15 @@ export default async function TestPage({ params }) {
     notFound();
   }
 
+  // interpret — функция, её нельзя передавать в клиентский компонент;
+  // подсчёт результата и так выполняется на сервере, в submitTest().
+  const { interpret, ...clientTest } = test;
+
   return (
     <div>
       <h1>{test.title}</h1>
       <p className={styles.description}>{test.description}</p>
-      <TestForm test={test} />
+      <TestForm test={clientTest} />
       <p className={styles.copyright}>{test.copyright}</p>
     </div>
   );
