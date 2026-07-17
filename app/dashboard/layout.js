@@ -6,9 +6,14 @@ import styles from "./dashboard.module.css";
 
 export default async function DashboardLayout({ children }) {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getUser();
+    user = data.user;
+  } catch {
+    redirect("/login");
+  }
 
   if (!user) {
     redirect("/login");
