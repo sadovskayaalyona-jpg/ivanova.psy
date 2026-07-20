@@ -1,0 +1,97 @@
+.description {
+  color: var(--color-text-muted);
+  margin: 0.6rem 0 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 480px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fieldLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.fieldLabel strong {
+  color: var(--color-accent);
+}
+
+.field input[type="range"] {
+  width: 100%;
+  accent-color: var(--color-accent);
+}
+
+.error {
+  color: #a33;
+  font-size: 0.9rem;
+}
+
+.disclaimer {
+  margin-top: 2.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  max-width: 640px;
+}
+
+.result {
+  max-width: 640px;
+}
+
+.chartWrap {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.average {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 2rem;
+}
+
+.lowSpheres h2 {
+  margin-bottom: 1rem;
+}
+
+.lowSphere {
+  padding: 1rem 1.2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  margin-bottom: 0.9rem;
+}
+
+.lowSphere h3 {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.lowSphere p {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+}
+
+.balanced {
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.resultActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}

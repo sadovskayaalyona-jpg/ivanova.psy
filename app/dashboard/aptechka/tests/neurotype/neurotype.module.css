@@ -1,0 +1,94 @@
+.description {
+  color: var(--color-text-muted);
+  margin: 0.6rem 0 0.6rem;
+}
+
+.inspiredBy {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  max-width: 640px;
+}
+
+.question {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.question legend {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 0.8rem;
+  padding: 0;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.option:has(input:checked) {
+  border-color: var(--color-accent);
+  background: #f1f6f4;
+}
+
+.error {
+  color: #a33;
+  font-size: 0.9rem;
+}
+
+.disclaimer {
+  margin-top: 2.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  max-width: 640px;
+}
+
+.result {
+  max-width: 640px;
+}
+
+.chartWrap {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 1.5rem;
+}
+
+.recommendations h3 {
+  margin-top: 1.4rem;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+}
+
+.recommendations p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.resultActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}

@@ -29,6 +29,23 @@ export default function TestsPage() {
             </span>
           </Link>
         ))}
+
+        <Link href="/dashboard/aptechka/tests/wheel" className={styles.card}>
+          <span className={styles.cardTitle}>Колесо баланса жизни</span>
+          <span className={styles.cardDescription}>
+            8 сфер, оценка от 1 до 10
+          </span>
+        </Link>
+
+        <Link
+          href="/dashboard/aptechka/tests/neurotype"
+          className={styles.card}
+        >
+          <span className={styles.cardTitle}>Профиль нейромедиаторов</span>
+          <span className={styles.cardDescription}>
+            20 вопросов, авторская версия по мотивам Braverman
+          </span>
+        </Link>
       </div>
     </div>
   );
