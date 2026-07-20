@@ -1,0 +1,167 @@
+.intro {
+  color: var(--color-text-muted);
+  margin: 0.6rem 0 2rem;
+  max-width: 60ch;
+}
+
+.step {
+  max-width: 640px;
+}
+
+.stepIntro {
+  color: var(--color-text-muted);
+  margin: 0.6rem 0 1.5rem;
+}
+
+.inspiredBy {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  margin-bottom: 2rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fieldLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+
+.fieldLabel strong {
+  color: var(--color-accent);
+}
+
+.field input[type="range"] {
+  width: 100%;
+  accent-color: var(--color-accent);
+}
+
+.field input[type="text"] {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.field input[type="text"]:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.question {
+  border: none;
+  padding: 0;
+  margin: 0 0 1.8rem;
+}
+
+.question legend {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 0.8rem;
+  padding: 0;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.option:has(input:checked) {
+  border-color: var(--color-accent);
+  background: #f1f6f4;
+}
+
+.error {
+  color: #a33;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.stepActions {
+  display: flex;
+  gap: 1rem;
+}
+
+.result {
+  max-width: 680px;
+}
+
+.chartsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.section {
+  margin-bottom: 2.2rem;
+}
+
+.section h3 {
+  margin-bottom: 0.6rem;
+}
+
+.section p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.lowSphere,
+.goalBlock {
+  padding: 1rem 1.2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  margin-bottom: 0.9rem;
+}
+
+.lowSphere strong,
+.goalBlock strong {
+  display: block;
+  color: var(--color-primary);
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.resultActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}

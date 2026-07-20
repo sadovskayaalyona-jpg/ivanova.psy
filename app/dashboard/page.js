@@ -3,9 +3,18 @@ import { createClient } from "@/lib/supabase/server";
 import { getTest } from "@/lib/tests";
 import { wheelOfBalance } from "@/lib/tests/wheel-of-balance";
 import { neurotype } from "@/lib/tests/neurotype";
+import { PATH_SLUG } from "@/lib/tests/path-narrative";
 import styles from "./dashboard.module.css";
 
 function formatHistoryLine(row) {
+  if (row.test_slug === PATH_SLUG) {
+    const neuroScores = row.answers?.neurotype ?? {};
+    const sorted = [...neurotype.dimensions].sort(
+      (a, b) => (neuroScores[b.key] ?? 0) - (neuroScores[a.key] ?? 0)
+    );
+    return `Путь к балансу — ведущий тип: ${sorted[0].label}`;
+  }
+
   if (row.test_slug === wheelOfBalance.slug) {
     const scores = Object.values(row.answers ?? {});
     const average = scores.length

@@ -17,6 +17,14 @@ export default function TestsPage() {
       </p>
 
       <div className={styles.cardGrid}>
+        <Link href="/dashboard/aptechka/tests/path" className={styles.card}>
+          <span className={styles.cardTitle}>Путь к балансу</span>
+          <span className={styles.cardDescription}>
+            Колесо баланса + твои цели + профиль нейромедиаторов — единая
+            персональная карта с рекомендациями
+          </span>
+        </Link>
+
         {testList.map((test) => (
           <Link
             key={test.slug}
