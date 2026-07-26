@@ -57,24 +57,22 @@ export async function submitLead({
   // к массиву в порядке вопросов, scoreArchetypes ожидает именно массив.
   const { dominant, second, isMixed, counts } = scoreArchetypes(Object.values(archetypeAnswers));
 
+  // Без .select() — анонимному ключу намеренно не даём прав на чтение
+  // (в том числе на RETURNING после INSERT), только на вставку.
   const supabase = anonClient();
-  const { data, error } = await supabase
-    .from("vygoranie_leads")
-    .insert({
-      name: contact.name.trim(),
-      contact_method: contact.method,
-      contact_value: contact.value.trim(),
-      consent_given: true,
-      burnout_score: burnoutScore10,
-      burnout_label: burnoutLabel,
-      braverman_type: dominantType.key,
-      wheel_answers: wheelValues,
-      archetype_key: dominant.key,
-      archetype_label: dominant.label,
-      is_mixed_profile: isMixed,
-    })
-    .select("id")
-    .single();
+  const { error } = await supabase.from("vygoranie_leads").insert({
+    name: contact.name.trim(),
+    contact_method: contact.method,
+    contact_value: contact.value.trim(),
+    consent_given: true,
+    burnout_score: burnoutScore10,
+    burnout_label: burnoutLabel,
+    braverman_type: dominantType.key,
+    wheel_answers: wheelValues,
+    archetype_key: dominant.key,
+    archetype_label: dominant.label,
+    is_mixed_profile: isMixed,
+  });
 
   if (error) {
     return { error: "Не получилось сохранить результат. Попробуйте ещё раз." };
@@ -82,7 +80,6 @@ export async function submitLead({
 
   return {
     success: true,
-    leadId: data.id,
     burnoutScore10,
     burnoutLabel,
     dominantType,
