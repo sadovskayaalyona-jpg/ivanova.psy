@@ -1,4 +1,4 @@
-import { signOut } from "@/app/dashboard/actions";
+import { signOut } from "@/app/(main)/dashboard/actions";
 import styles from "./LogoutButton.module.css";
 
 export default function LogoutButton() {
