@@ -37,7 +37,7 @@ export default function VgWheelChart({ values }) {
           })
           .join(" ");
         return (
-          <polygon key={fraction} points={ring} fill="none" stroke="#2b301f" strokeWidth="1" />
+          <polygon key={fraction} points={ring} fill="none" stroke="#d6d9bd" strokeWidth="1" />
         );
       })}
 
@@ -50,7 +50,7 @@ export default function VgWheelChart({ values }) {
             y1={CENTER}
             x2={edge.x}
             y2={edge.y}
-            stroke="#2b301f"
+            stroke="#d6d9bd"
             strokeWidth="1"
           />
         );
@@ -73,7 +73,7 @@ export default function VgWheelChart({ values }) {
             y={labelPoint.y}
             fontSize="10"
             textAnchor="middle"
-            fill="#a9ad9c"
+            fill="#6b6f5c"
           >
             {s.label}
           </text>

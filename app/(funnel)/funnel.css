@@ -1,12 +1,12 @@
 :root {
-  --vg-bg: #0d0f09;
-  --vg-surface: #161911;
-  --vg-surface-raised: #1e2216;
-  --vg-text: #f6f6f0;
-  --vg-text-muted: #a9ad9c;
+  --vg-bg: #f7f8ec;
+  --vg-surface: #ffffff;
+  --vg-surface-raised: #eef0d8;
+  --vg-text: #1a1d10;
+  --vg-text-muted: #6b6f5c;
   --vg-accent: #cddc37;
   --vg-accent-ink: #14160c;
-  --vg-border: #2b301f;
+  --vg-border: #dde0c4;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
     sans-serif;
 }
