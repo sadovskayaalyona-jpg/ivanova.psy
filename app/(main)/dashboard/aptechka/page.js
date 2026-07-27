@@ -18,7 +18,7 @@ export default function AptechkaPage() {
         <Link href="/dashboard/aptechka/tests" className={styles.card}>
           <span className={styles.cardTitle}>Тесты</span>
           <span className={styles.cardDescription}>
-            Опросники для самонаблюдения: тревога, настроение
+            Опросник для самонаблюдения: выгорание и баланс
           </span>
         </Link>
         <Link href="/dashboard/aptechka/exercises" className={styles.card}>
