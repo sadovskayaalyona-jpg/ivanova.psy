@@ -2,8 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { wheelSpheres } from "@/lib/vygoranie/block2-wheel";
-import { bravermanScale } from "@/lib/vygoranie/block3-braverman";
 import { archetypes } from "@/lib/vygoranie/block4-archetypes";
+import { buildResultNarrative } from "@/lib/vygoranie/result-narrative";
 import VgWheelChart from "@/app/(funnel)/vygoranie/VgWheelChart";
 import styles from "../../admin.module.css";
 
@@ -25,8 +25,12 @@ export default async function LeadPreviewPage({ params }) {
     notFound();
   }
 
-  const dominantType = bravermanScale.types.find((t) => t.key === lead.braverman_type);
   const archetype = archetypes.find((a) => a.key === lead.archetype_key);
+  const narrative = buildResultNarrative({
+    wheelValues: lead.wheel_answers,
+    archetypeKey: lead.archetype_key,
+    bravermanTypeKey: lead.braverman_type,
+  });
 
   return (
     <div>
@@ -54,8 +58,8 @@ export default async function LeadPreviewPage({ params }) {
       </div>
 
       <div className={styles.previewCard}>
-        <h3>Что выжигает: {dominantType?.label ?? lead.braverman_type}</h3>
-        <p>{dominantType?.burnoutPhrase}</p>
+        <h3>Как вы устроены</h3>
+        <p>{narrative.combined}</p>
       </div>
 
       <div className={styles.previewCard}>
@@ -78,6 +82,11 @@ export default async function LeadPreviewPage({ params }) {
           {lead.is_mixed_profile ? " (смешанный профиль)" : ""}
         </h3>
         <p>{archetype?.mechanism}</p>
+      </div>
+
+      <div className={styles.previewCard}>
+        <h3>К чему это ведёт, если оставить как есть</h3>
+        <p>{narrative.stakes}</p>
       </div>
     </div>
   );

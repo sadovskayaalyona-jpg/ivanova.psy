@@ -6,6 +6,7 @@ import { wheelSpheres } from "@/lib/vygoranie/block2-wheel";
 import { bravermanScale } from "@/lib/vygoranie/block3-braverman";
 import { archetypes, questions as archetypeQuestions } from "@/lib/vygoranie/block4-archetypes";
 import { computePartialResult } from "@/lib/vygoranie/scoring";
+import { buildResultNarrative } from "@/lib/vygoranie/result-narrative";
 import { submitLead } from "./actions";
 import VgWheelChart from "./VgWheelChart";
 import styles from "./vygoranie.module.css";
@@ -372,6 +373,12 @@ export default function QuizFunnel() {
 
   // --- RESULT ---
   if (step === "result" && result) {
+    const narrative = buildResultNarrative({
+      wheelValues: result.wheelValues,
+      archetypeKey: result.archetype.key,
+      bravermanTypeKey: result.dominantType.key,
+    });
+
     return (
       <div className={styles.screen}>
         <div className={styles.eyebrow}>Ваш полный разбор</div>
@@ -380,11 +387,8 @@ export default function QuizFunnel() {
         </h2>
 
         <div className={styles.resultSection}>
-          <h3>Что вас выжигает</h3>
-          <p>
-            <strong style={{ color: "var(--vg-accent)" }}>{result.dominantType.label}:</strong>{" "}
-            {result.dominantType.burnoutPhrase}.
-          </p>
+          <h3>Как вы устроены</h3>
+          <p>{narrative.combined}</p>
         </div>
 
         <div className={styles.resultSection}>
@@ -403,11 +407,17 @@ export default function QuizFunnel() {
         </div>
 
         <div className={styles.resultSection}>
+          <h3>К чему это ведёт, если оставить как есть</h3>
+          <p>{narrative.stakes}</p>
+        </div>
+
+        <div className={styles.resultSection}>
           <h3>Что делать дальше</h3>
           <p>
-            Один балл, один тип и один архетип — ещё не план действий. На
-            бесплатной 15-минутной диагностике разберём именно вашу ситуацию
-            и дадим 1-2 конкретных шага, с которых начать.
+            Диагноз без плана — просто тревожная информация. На бесплатной
+            15-минутной диагностике разберём именно вашу ситуацию и дадим
+            1-2 конкретных шага, с которых начать — под ваш тип и вашу
+            команду, а не общий совет.
           </p>
           <div className={styles.actions}>
             <a className="vg-button" href="#diagnostics">
