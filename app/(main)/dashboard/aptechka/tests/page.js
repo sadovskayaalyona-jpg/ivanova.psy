@@ -54,6 +54,16 @@ export default function TestsPage() {
             20 вопросов, авторская версия по мотивам Braverman
           </span>
         </Link>
+
+        <Link href="/vygoranie" className={styles.card}>
+          <span className={styles.cardTitle}>
+            Тест на выгорание руководителя
+          </span>
+          <span className={styles.cardDescription}>
+            Уровень выгорания, колесо баланса и твой управленческий стиль —
+            развёрнутый разбор
+          </span>
+        </Link>
       </div>
     </div>
   );
