@@ -31,7 +31,7 @@
 
 .cardFormat {
   font-size: 0.85rem;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 500;
   margin-bottom: 0.75rem;
 }

@@ -1,11 +1,15 @@
 :root {
-  --color-bg: #f7f6f3;
+  --color-bg: #f7f8ec;
   --color-surface: #ffffff;
-  --color-text: #1f2430;
-  --color-text-muted: #5b6472;
-  --color-primary: #263449;
-  --color-accent: #4b7b6f;
-  --color-border: #e2e0da;
+  --color-text: #1a1d10;
+  --color-text-muted: #6b6f5c;
+  --color-primary: #1a1d10;
+  --color-accent: #cddc37;
+  --color-accent-ink: #14160c;
+  /* Тот же лайм, но затемнённый — для обычного текста: чистый --color-accent
+     почти не читается на светлом фоне (используем его для заливок/фона/рамок). */
+  --color-accent-text: #7d8a1f;
+  --color-border: #dde0c4;
   --container-width: 1080px;
 }
 
@@ -64,8 +68,9 @@ h1,
 h2,
 h3 {
   color: var(--color-primary);
-  line-height: 1.25;
-  font-weight: 600;
+  font-family: var(--font-display), Georgia, serif;
+  line-height: 1.2;
+  font-weight: 700;
 }
 
 .container {
@@ -94,12 +99,13 @@ h3 {
 }
 
 .button--primary {
-  background: var(--color-primary);
-  color: var(--color-surface);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
 }
 
 .button--primary:hover {
-  background: var(--color-accent);
+  background: var(--color-primary);
+  color: var(--color-surface);
 }
 
 .button--outline {
@@ -108,8 +114,9 @@ h3 {
 }
 
 .button--outline:hover {
+  background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-accent);
+  color: var(--color-accent-ink);
 }
 
 .placeholder {

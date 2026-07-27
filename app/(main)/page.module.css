@@ -10,7 +10,7 @@
 .heroTagline {
   margin-top: 0.5rem;
   font-size: 1.15rem;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 500;
 }
 
@@ -81,8 +81,8 @@
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: var(--color-accent);
-  border: 1px solid var(--color-accent);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
   border-radius: 999px;
   padding: 0.25rem 0.75rem;
   margin-bottom: 1rem;

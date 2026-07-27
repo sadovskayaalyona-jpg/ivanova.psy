@@ -1,7 +1,17 @@
+import { Bodoni_Moda } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
+
+// Тот же шрифт, что и в воронке «Тест на выгорание» — единый визуальный
+// почерк заголовков по всему сайту.
+const bodoniModa = Bodoni_Moda({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "700", "900"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata = {
   title: {
@@ -13,7 +23,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ru">
+    <html lang="ru" className={bodoniModa.variable}>
       <body>
         <Header />
         <main>{children}</main>

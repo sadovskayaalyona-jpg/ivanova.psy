@@ -41,7 +41,7 @@
 }
 
 .fieldLabel strong {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .field input[type="range"] {
@@ -96,7 +96,7 @@
 
 .option:has(input:checked) {
   border-color: var(--color-accent);
-  background: #f1f6f4;
+  background: #f4f6dc;
 }
 
 .error {

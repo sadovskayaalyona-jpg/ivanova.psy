@@ -7,7 +7,7 @@
 .stepNumber {
   font-size: 3rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   margin-bottom: 1rem;
 }
 

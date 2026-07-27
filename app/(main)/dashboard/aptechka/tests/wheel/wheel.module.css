@@ -24,7 +24,7 @@
 }
 
 .fieldLabel strong {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .field input[type="range"] {
