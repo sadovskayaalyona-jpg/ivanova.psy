@@ -7,6 +7,8 @@ import { bravermanScale } from "@/lib/vygoranie/block3-braverman";
 import { archetypes, questions as archetypeQuestions } from "@/lib/vygoranie/block4-archetypes";
 import { computePartialResult } from "@/lib/vygoranie/scoring";
 import { buildResultNarrative } from "@/lib/vygoranie/result-narrative";
+import { getMovieArchetype } from "@/lib/vygoranie/block4-movie-archetypes";
+import MovieIcon from "./MovieIcon";
 import { submitLead } from "./actions";
 import VgWheelChart from "./VgWheelChart";
 import styles from "./vygoranie.module.css";
@@ -44,6 +46,8 @@ export default function QuizFunnel() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const [result, setResult] = useState(null);
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [pdfError, setPdfError] = useState(null);
 
   const step = STEPS[stepIndex];
   const goTo = (name) => setStepIndex(STEPS.indexOf(name));
@@ -371,6 +375,38 @@ export default function QuizFunnel() {
     );
   }
 
+  async function handleDownloadPdf() {
+    setPdfLoading(true);
+    setPdfError(null);
+    try {
+      const res = await fetch("/api/vygoranie-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          burnoutScore10: result.burnoutScore10,
+          burnoutLabel: result.burnoutLabel,
+          wheelValues: result.wheelValues,
+          archetypeKey: result.archetype.key,
+          bravermanTypeKey: result.dominantType.key,
+        }),
+      });
+      if (!res.ok) throw new Error("pdf failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "test-na-vygoranie.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      setPdfError("Не получилось собрать PDF. Попробуйте ещё раз.");
+    } finally {
+      setPdfLoading(false);
+    }
+  }
+
   // --- RESULT ---
   if (step === "result" && result) {
     const narrative = buildResultNarrative({
@@ -378,6 +414,7 @@ export default function QuizFunnel() {
       archetypeKey: result.archetype.key,
       bravermanTypeKey: result.dominantType.key,
     });
+    const movie = getMovieArchetype(result.archetype.key);
 
     return (
       <div className={styles.screen}>
@@ -406,6 +443,45 @@ export default function QuizFunnel() {
           <p>{result.archetype.mechanismShort}</p>
         </div>
 
+        {movie && (
+          <div className={styles.resultSection}>
+            <h3>Кто вы в этой роли</h3>
+            <div className={styles.movieIconBadge}>
+              <MovieIcon archetypeKey={result.archetype.key} />
+            </div>
+            <p className={styles.movieName}>
+              Вы — {movie.character} <span className={styles.movieSource}>({movie.source})</span>
+            </p>
+            {movie.introParagraphs.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+
+            <p className={styles.movieSubhead}>Сильные стороны</p>
+            <ul className={styles.movieList}>
+              {movie.strengths.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+
+            <p className={styles.movieSubhead}>Тень</p>
+            <ul className={styles.movieList}>
+              {movie.shadow.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+
+            <p className={styles.movieSubhead}>Зона роста</p>
+            <ol className={styles.movieList}>
+              {movie.growthAreas.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ol>
+
+            <p className={styles.movieSubhead}>Как гармонизировать и не выгорать</p>
+            <p>{movie.harmonize}</p>
+          </div>
+        )}
+
         <div className={styles.resultSection}>
           <h3>К чему это ведёт, если оставить как есть</h3>
           <p>{narrative.stakes}</p>
@@ -414,16 +490,30 @@ export default function QuizFunnel() {
         <div className={styles.resultSection}>
           <h3>Что делать дальше</h3>
           <p>
-            Диагноз без плана — просто тревожная информация. На бесплатной
-            15-минутной диагностике разберём именно вашу ситуацию и дадим
-            1-2 конкретных шага, с которых начать — под ваш тип и вашу
-            команду, а не общий совет.
+            Диагноз без плана — просто тревожная информация. Дальше — на
+            выбор: разовая управленческая диагностика, где разберём именно
+            вашу ситуацию и дадим конкретный план действий, или консультация,
+            если нужна регулярная поддержка.
           </p>
           <div className={styles.actions}>
-            <a className="vg-button" href="#diagnostics">
-              Записаться на диагностику
+            <a className="vg-button" href="/contact">
+              Записаться на управленческую диагностику
+            </a>
+            <a className="vg-button vg-button--outline" href="/contact">
+              Записаться на консультацию
             </a>
           </div>
+          <div className={styles.actions}>
+            <button
+              className="vg-button vg-button--outline"
+              type="button"
+              onClick={handleDownloadPdf}
+              disabled={pdfLoading}
+            >
+              {pdfLoading ? "Собираем PDF…" : "Скачать результат в PDF"}
+            </button>
+          </div>
+          {pdfError && <p className={styles.error}>{pdfError}</p>}
         </div>
 
         <p className={styles.disclaimer}>

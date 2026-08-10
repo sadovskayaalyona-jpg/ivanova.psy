@@ -262,6 +262,53 @@
   font-size: 0.98rem;
 }
 
+.movieIconBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--vg-surface-raised);
+  color: var(--vg-accent-ink);
+  margin-bottom: 1rem;
+}
+
+.movieName {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.35rem;
+  color: var(--vg-text);
+  margin-bottom: 1rem;
+}
+
+.movieSource {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--vg-text-muted);
+}
+
+.movieSubhead {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vg-accent);
+  margin: 1.4rem 0 0.6rem;
+}
+
+.movieList {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--vg-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.movieList li {
+  margin-bottom: 0.5rem;
+}
+
 .chartWrap {
   display: flex;
   justify-content: center;
