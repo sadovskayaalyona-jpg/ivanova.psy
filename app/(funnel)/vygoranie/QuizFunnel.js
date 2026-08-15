@@ -13,7 +13,10 @@ import { submitLead } from "./actions";
 import VgWheelChart from "./VgWheelChart";
 import styles from "./vygoranie.module.css";
 
-const STEPS = ["intro", "burnout", "wheel", "braverman", "archetype", "teaser", "capture", "result"];
+// Порядок блоков: сначала самый вовлекающий (ситуации архетипа) и самый
+// лёгкий (колесо баланса), тяжёлый по честности с собой блок про выгорание —
+// последним, когда человек уже вложился в прохождение.
+const STEPS = ["intro", "archetype", "wheel", "braverman", "burnout", "teaser", "capture", "result"];
 
 const burnoutFlat = burnoutScale.groups.flatMap((g) => g.questions);
 const bravermanFlat = bravermanScale.types.flatMap((t) => t.statements);
@@ -21,7 +24,7 @@ const bravermanFlat = bravermanScale.types.flatMap((t) => t.statements);
 function ProgressBar({ stepIndex }) {
   // Не считаем intro/teaser/capture/result как "прогресс по вопросам" —
   // прогресс относится только к 4 блокам теста.
-  const questionSteps = ["burnout", "wheel", "braverman", "archetype"];
+  const questionSteps = ["archetype", "wheel", "braverman", "burnout"];
   const currentIndex = questionSteps.indexOf(STEPS[stepIndex]);
   if (currentIndex === -1) return null;
   return (
@@ -84,53 +87,59 @@ export default function QuizFunnel() {
         <div className={styles.eyebrow}>Тест для руководителей</div>
         <h1 className={styles.title}>Что именно вас выжигает?</h1>
         <p className={styles.subtitle}>
-          4 коротких блока, 5 минут. В конце — персональный разбор: уровень
-          выгорания, тип нейромедиаторной доминанты, колесо баланса и стиль
-          управления, который вас истощает.
+          4 коротких блока. В конце — персональный разбор: стиль управления,
+          который вас истощает, колесо баланса, мотивационный тип и уровень
+          выгорания.
         </p>
-        <button className="vg-button" type="button" onClick={() => goTo("burnout")}>
+        <button className="vg-button" type="button" onClick={() => goTo("archetype")}>
           Начать тест
         </button>
       </div>
     );
   }
 
-  // --- BLOCK 1: BURNOUT ---
-  if (step === "burnout") {
+  // --- BLOCK 1: ARCHETYPE (one situational question per screen) ---
+  if (step === "archetype") {
+    const q = archetypeQuestions[archetypeQIndex];
+    const isLast = archetypeQIndex === archetypeQuestions.length - 1;
+
     return (
       <div className={styles.screen}>
         <ProgressBar stepIndex={stepIndex} />
-        <div className={styles.eyebrow}>Блок 1 из 4</div>
-        <h2 className={styles.title}>Уровень выгорания</h2>
-        <p className={styles.subtitle}>{burnoutScale.description}</p>
-        <div className={styles.form}>
-          {burnoutFlat.map((text, i) => (
-            <fieldset key={i} className={styles.question}>
-              <span className={styles.questionText}>{text}</span>
-              <div className={styles.optionsRow}>
-                {burnoutScale.options.map((opt) => (
-                  <label key={opt.value} className={styles.scaleOption}>
-                    <input
-                      type="radio"
-                      name={`burnout-${i}`}
-                      checked={burnoutAnswers[i] === opt.value}
-                      onChange={() => setBurnoutAnswers((prev) => ({ ...prev, [i]: opt.value }))}
-                    />
-                    <span>{opt.value}</span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
+        <div className={styles.eyebrow}>
+          Блок 1 из 4 · Ситуация {archetypeQIndex + 1} из {archetypeQuestions.length}
+        </div>
+        <h2 className={styles.title}>{q.situation}</h2>
+        <div className={styles.optionsStack}>
+          {q.options.map((optionText, optIndex) => (
+            <label key={optIndex} className={styles.stackOption}>
+              <input
+                type="radio"
+                name={`archetype-${archetypeQIndex}`}
+                checked={archetypeAnswers[archetypeQIndex] === optIndex}
+                onChange={() => {
+                  setArchetypeAnswers((prev) => ({ ...prev, [archetypeQIndex]: optIndex }));
+                  if (isLast) {
+                    goTo("wheel");
+                  } else {
+                    setArchetypeQIndex((i) => i + 1);
+                  }
+                }}
+              />
+              <span>{optionText}</span>
+            </label>
           ))}
         </div>
         <div className={styles.actions}>
           <button
-            className="vg-button"
+            className="vg-button vg-button--outline"
             type="button"
-            disabled={!burnoutComplete}
-            onClick={() => goTo("wheel")}
+            onClick={() => {
+              if (archetypeQIndex === 0) goTo("intro");
+              else setArchetypeQIndex((i) => i - 1);
+            }}
           >
-            Далее
+            Назад
           </button>
         </div>
       </div>
@@ -164,7 +173,7 @@ export default function QuizFunnel() {
           ))}
         </div>
         <div className={styles.actions}>
-          <button className="vg-button vg-button--outline" type="button" onClick={() => goTo("burnout")}>
+          <button className="vg-button vg-button--outline" type="button" onClick={() => goTo("archetype")}>
             Назад
           </button>
           <button className="vg-button" type="button" onClick={() => goTo("braverman")}>
@@ -175,7 +184,7 @@ export default function QuizFunnel() {
     );
   }
 
-  // --- BLOCK 3: BRAVERMAN ---
+  // --- BLOCK 3: BRAVERMAN (мотивационный тип) ---
   if (step === "braverman") {
     return (
       <div className={styles.screen}>
@@ -211,7 +220,7 @@ export default function QuizFunnel() {
             className="vg-button"
             type="button"
             disabled={!bravermanComplete}
-            onClick={() => goTo("archetype")}
+            onClick={() => goTo("burnout")}
           >
             Далее
           </button>
@@ -220,48 +229,45 @@ export default function QuizFunnel() {
     );
   }
 
-  // --- BLOCK 4: ARCHETYPE (one situational question per screen) ---
-  if (step === "archetype") {
-    const q = archetypeQuestions[archetypeQIndex];
-    const isLast = archetypeQIndex === archetypeQuestions.length - 1;
-
+  // --- BLOCK 4: BURNOUT ---
+  if (step === "burnout") {
     return (
       <div className={styles.screen}>
         <ProgressBar stepIndex={stepIndex} />
-        <div className={styles.eyebrow}>
-          Блок 4 из 4 · Ситуация {archetypeQIndex + 1} из {archetypeQuestions.length}
-        </div>
-        <h2 className={styles.title}>{q.situation}</h2>
-        <div className={styles.optionsStack}>
-          {q.options.map((optionText, optIndex) => (
-            <label key={optIndex} className={styles.stackOption}>
-              <input
-                type="radio"
-                name={`archetype-${archetypeQIndex}`}
-                checked={archetypeAnswers[archetypeQIndex] === optIndex}
-                onChange={() => {
-                  setArchetypeAnswers((prev) => ({ ...prev, [archetypeQIndex]: optIndex }));
-                  if (isLast) {
-                    goTo("teaser");
-                  } else {
-                    setArchetypeQIndex((i) => i + 1);
-                  }
-                }}
-              />
-              <span>{optionText}</span>
-            </label>
+        <div className={styles.eyebrow}>Блок 4 из 4</div>
+        <h2 className={styles.title}>Уровень выгорания</h2>
+        <p className={styles.subtitle}>{burnoutScale.description}</p>
+        <div className={styles.form}>
+          {burnoutFlat.map((text, i) => (
+            <fieldset key={i} className={styles.question}>
+              <span className={styles.questionText}>{text}</span>
+              <div className={styles.optionsRow}>
+                {burnoutScale.options.map((opt) => (
+                  <label key={opt.value} className={styles.scaleOption}>
+                    <input
+                      type="radio"
+                      name={`burnout-${i}`}
+                      checked={burnoutAnswers[i] === opt.value}
+                      onChange={() => setBurnoutAnswers((prev) => ({ ...prev, [i]: opt.value }))}
+                    />
+                    <span>{opt.value}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
           ))}
         </div>
         <div className={styles.actions}>
-          <button
-            className="vg-button vg-button--outline"
-            type="button"
-            onClick={() => {
-              if (archetypeQIndex === 0) goTo("braverman");
-              else setArchetypeQIndex((i) => i - 1);
-            }}
-          >
+          <button className="vg-button vg-button--outline" type="button" onClick={() => goTo("braverman")}>
             Назад
+          </button>
+          <button
+            className="vg-button"
+            type="button"
+            disabled={!burnoutComplete}
+            onClick={() => goTo("teaser")}
+          >
+            Далее
           </button>
         </div>
       </div>
@@ -282,7 +288,7 @@ export default function QuizFunnel() {
           </div>
           <p className={styles.subtitle} style={{ margin: "0 auto 2rem" }}>
             {partial.burnoutLabel}. Но балл — только часть картины: у вас есть
-            конкретный стиль управления и нейромедиаторный тип, из-за которых
+            конкретный стиль управления и мотивационный тип, из-за которых
             этот балл именно такой. Это — в полном разборе.
           </p>
           <button className="vg-button" type="button" onClick={() => goTo("capture")}>
@@ -300,7 +306,7 @@ export default function QuizFunnel() {
         <div className={styles.eyebrow}>Последний шаг</div>
         <h2 className={styles.title}>Куда прислать полный разбор?</h2>
         <p className={styles.subtitle}>
-          Тип по нейромедиаторам, колесо баланса, ваш архетип управления и
+          Ваш архетип управления, колесо баланса, мотивационный тип и
           конкретная рекомендация — сразу после отправки.
         </p>
         <form className={styles.form} onSubmit={handleCapture}>
@@ -518,9 +524,10 @@ export default function QuizFunnel() {
 
         <p className={styles.disclaimer}>
           Это инструмент самонаблюдения, а не медицинская диагностика. Тест —
-          авторская методика; идея нейромедиаторных типов вдохновлена
-          концепцией Eric Braverman, но вопросы и типология написаны
-          самостоятельно.
+          авторская методика; типология мотивационных типов вдохновлена
+          концепцией нейромедиаторных доминант Eric Braverman, но вопросы и
+          формулировки типов написаны самостоятельно и адаптированы под
+          управленческий контекст.
         </p>
       </div>
     );
